@@ -3,11 +3,6 @@ version: '3.7'
 volumes:
   openvpn_config:
   db_data:
-#networks:
-#   frontend:
-#    external: true
-#   backend:
-#    external: true
 
 services:
   openvpn:

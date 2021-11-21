@@ -1,6 +1,4 @@
 #!/bin/bash
-
-
 if [ ! -f "/etc/openvpn/easy-rsa/pki/ca.crt" ]; then
   cd /etc/openvpn/easy-rsa
   # Init PKI dirs and build CA certs

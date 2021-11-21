@@ -4,10 +4,6 @@ require 'vendor/autoload.php';
 $appName=$_GET["AppName"];
 $appInfo=$_GET["AppInfo"];
 $secretCode=$_GET["SecretCode"];
-
-
-
-
 $valid = isset($appName,$appInfo,$secretCode) && $appName != '' && $appInfo != '' && $secretCode != '';
 
 if (!$valid) {
