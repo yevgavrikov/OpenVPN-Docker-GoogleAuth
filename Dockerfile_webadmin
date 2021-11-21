@@ -26,5 +26,3 @@ RUN npm install -g bower
 RUN bower --allow-root install
 RUN rm -fr /root/OpenVPN-Admin && chown -R www-data:www-data /var/www/html
 COPY ./webadmin/start.sh /usr/local/bin
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
