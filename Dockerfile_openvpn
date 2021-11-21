@@ -29,4 +29,8 @@ COPY ./openvpn/docker-entrypoint.sh /usr/local/bin
 # Make ip forwading and make it persistent
 RUN echo "net.ipv4.ip_forward = 1" >> "/etc/sysctl.conf"
 
+# Fix ServerName resolf on EC2
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+
 ENTRYPOINT ["docker-entrypoint.sh"]
