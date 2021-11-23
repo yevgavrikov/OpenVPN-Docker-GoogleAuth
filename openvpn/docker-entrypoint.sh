@@ -22,6 +22,10 @@ fi
 sed -i "s/USER=''/USER='$OPENVPN_ADMIN_USER'/" "/etc/openvpn/scripts/config.sh"
 sed -i "s/PASS=''/PASS='$OPENVPN_ADMIN_PASSWORD'/" "/etc/openvpn/scripts/config.sh"
 sed -i "s/HOST='localhost'/HOST='db'/" "/etc/openvpn/scripts/config.sh"
+sed -i "s/\DB\ =\ ''/\DB='$OPENVPN_ADMIN_DATABASE'/" "/etc/openvpn/scripts/config.sh"
+
+# Change VPN IP range
+sed -i "s/server 10.8.0.0 255.255.255.0/server '${SERVER_IP_RANGE}'.0 255.255.255.0/" '/etc/openvpn/server.conf'
 
 # Add route to private VPC
 sed -i '$ a push "route '$VPC_PRIVATE_IP' 255.255.255.0"' '/etc/openvpn/server.conf'

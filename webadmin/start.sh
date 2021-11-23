@@ -3,7 +3,7 @@
 # wait until certificates are generated
 while [ ! -f "/etc/openvpn/ca.crt" ]
 do
-     sleep 1;
+     sleep 3;
      echo "Waiting for OpenVPN certificates to be generated";
 done
 
