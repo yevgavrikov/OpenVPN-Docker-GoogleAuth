@@ -30,12 +30,9 @@ Preparation:
 How to setup (tested on aws ec2 ubuntu 20 instance):
     $cd /root
     $git clone [https://github.com/yevgavrikov/OpenVPN-Docker-GoogleAuth-EC2.git](https://github.com/yevgavrikov/OpenVPN-Docker-GoogleAuth-EC2.git) openvpn
-    ** repo will be cloned to 'openvpn' folder
     $cd openvpn
-    $vim .env_template
-        **Change the parameters according your preferences** 
-    $mv .env_template .env
-        **make environment variables persistent**
+    $vim .env_template - "Change the parameters according your preferences
+    $mv .env_template .env - "make environment variables persistent"
     $docker-compose up
 
     Creating network "openvpn-docker-googleauth_default" with the default driver
