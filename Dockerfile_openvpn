@@ -17,7 +17,7 @@ RUN sed -i "s/group nogroup/group nobody/" "/etc/openvpn/server.conf" && \
     sed -i "s/explicit-exit-notify 1/explicit-exit-notify 0/" "/etc/openvpn/server.conf"
 
 # Add VPC private ip route to server config
-RUN sed -i "s/push 'route getenv('VPC_PRIVATE_IP') 255.255.255.0'/" "/etc/openvpn/server.conf"
+RUN sed -i "s/push "route getenv('VPC_PRIVATE_IP') 255.255.255.0"/" "/etc/openvpn/server.conf"
 
 # Add client to client connection if needed and presist client IP
 RUN sed -i "s/client-to-client/" "/etc/openvpn/server.conf" && \
