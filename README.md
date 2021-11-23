@@ -27,7 +27,7 @@ Preparation:
  1. Install **Docker** - apt install docker.io
  2. Install **docker-compose** - apt install docker-compose
 
-How to setup (tested on aws ec2 ubuntu 20 instance):
+## How to setup (tested on aws ec2 ubuntu 20 instance):
     $cd /root
     $git clone [https://github.com/yevgavrikov/OpenVPN-Docker-GoogleAuth-EC2.git](https://github.com/yevgavrikov/OpenVPN-Docker-GoogleAuth-EC2.git) openvpn
     $cd openvpn
@@ -55,8 +55,7 @@ How to setup (tested on aws ec2 ubuntu 20 instance):
     Digest: sha256:8eee082936869e8c77abb2eb18f10f61de02dc10c36b01cb35955114be2afd64
 
 
-Wait installation finish:
-     **Copying certificates**
+Wait installation finish: "Copying certificates"
 
 Now check that you have 4 docker containers running in your system:
 
