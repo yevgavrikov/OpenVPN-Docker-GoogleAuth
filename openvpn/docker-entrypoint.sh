@@ -23,6 +23,9 @@ sed -i "s/USER=''/USER='$OPENVPN_ADMIN_USER'/" "/etc/openvpn/scripts/config.sh"
 sed -i "s/PASS=''/PASS='$OPENVPN_ADMIN_PASSWORD'/" "/etc/openvpn/scripts/config.sh"
 sed -i "s/HOST='localhost'/HOST='db'/" "/etc/openvpn/scripts/config.sh"
 
+# Add route to private VPC
+sed -i '$ a push "route '$VPC_PRIVATE_IP' 255.255.255.0"' '/etc/openvpn/server.conf'
+
 mkdir /dev/net
 if [ ! -f /dev/net/tun ]; then
     mknod /dev/net/tun c 10 200
