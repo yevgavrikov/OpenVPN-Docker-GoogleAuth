@@ -1,9 +1,5 @@
 
-## Creating a VPN with 2 Factor Authentication using OpenVPN and Docker
-
-Blog Article: https://spltech.co.uk/creating-a-vpn-with-2-factor-authentication-using-openvpn-and-docker/
-
-[My Youtube Channel](https://www.youtube.com/channel/UCK1NFGy1pSjOVHW7_4qfffA)
+## Creating a VPN with 2 Factor Authentication using OpenVPN and Docker on EC2 instance
 
 ## How it works
 
@@ -23,23 +19,24 @@ The new OpenVPN implementation runs as 4 docker containers:
 
 * **openvpn** docker container runs the openvpn server
 
-* **webadmin **runs the webadmin interface for OpenVPN
+* **webadmin** runs the webadmin interface for OpenVPN
 
-* **googleauth **is a docker container that runs a small PHP microservice to do the 2 step authentication(pairing and validation).
-
-* **openvpn_docker_nginx** is the docker container that exposes the OpenVPN interface via SSL
+* **googleauth** is a docker container that runs a small PHP microservice to do the 2 step authentication(pairing and validation).
 
 Preparation:
+ 1. Install **Docker** - apt install docker.io
+ 2. Install **docker-compose** - apt install docker-compose
 
- 1. Install **Docker**
-
- 2. Install **docker-compos**e
-
-Steps for setup:
-
-    $git clone [https://github.com/armindocachada/OpenVPN-Docker-GoogleAuth](https://github.com/armindocachada/OpenVPN-Docker-GoogleAuth)
-    $cd OpenVPN-Docker-GoogleAuth
-    docker-compose up -d
+How to setup (tested on aws ec2 ubuntu 20 instance):
+    $cd /root
+    $git clone [https://github.com/yevgavrikov/OpenVPN-Docker-GoogleAuth-EC2.git](https://github.com/yevgavrikov/OpenVPN-Docker-GoogleAuth-EC2.git) openvpn
+    ** repo will be cloned to 'openvpn' folder
+    $cd openvpn
+    $vim .env_template
+        **Change the parameters according your preferences** 
+    $mv .env_template .env
+        **make environment variables persistent**
+    $docker-compose up
 
     Creating network "openvpn-docker-googleauth_default" with the default driver
     Creating volume "openvpn-docker-googleauth_openvpn_config" with default driver
@@ -60,32 +57,9 @@ Steps for setup:
 
     Digest: sha256:8eee082936869e8c77abb2eb18f10f61de02dc10c36b01cb35955114be2afd64
 
-    Status: Downloaded newer image for centos/php-72-centos7:latest
 
-    ---> 6df586f63c89
-
-    Step 2/16 : USER root
-
-    ---> Running in 2ea6f77e847c
-
-    ....
-
-    bootstrap#3.4.1 vendor/bootstrap
-    └── jquery#2.2.4
-    Removing intermediate container cc0508eca502
-    ---> d94208cdefe1
-    Step 14/15 : RUN rm -fr /root/OpenVPN-Admin && chown -R www-data:www-data /var/www/html
-    ---> Running in 319edaf415c7
-    Removing intermediate container 319edaf415c7
-    ---> 5aaa0ae56087
-    Step 15/15 : COPY ./webadmin/start.sh /usr/local/bin
-    ---> d8a662dbafd5
-    Successfully built d8a662dbafd5
-    Successfully tagged openvpn-docker-googleauth_webadmin:latest
-    Creating googleauth ... done
-    Creating db         ... done
-    Creating openvpn    ... done
-    Creating webadmin   ... done
+Wait installation finish:
+     **Copying certificates**
 
 Now check that you have 4 docker containers running in your system:
 
@@ -103,15 +77,19 @@ Now check that you have 4 docker containers running in your system:
 
 The **googleauth** docker container is needed for the 2 factor authentication. It is called internally by openvpn and the webadmin when doing the 2 factor authentication.
 
-The **db** docker container is used to store usernames/passwords.
+The **db** docker container is used to store username/password.
 
-The **OpenVPN c**ontainer runs the **OpenVPN** server to which the **OpenVPN** will connect.
+The **OpenVPN** container runs the **OpenVPN** server to which the **OpenVPN** will connect.
 
-**The webadmin **container contains the OpenVPN web administration interface where you can create **VPN** accounts and setup **2 Factor** authentication.
+The **webadmin** container contains the OpenVPN web administration interface where you can create **VPN** accounts and setup **2Factor** authentication.
 
-To access the OpenVPN web administration interface you can use:
+Stop the docker compose and run in background
+    $docker-compose stop 
+    $ docker-compose up -d
 
-[http://localhost:8080/](http://localhost:8080/)
+To access the OpenVPN web administration interface you use instance public IP:
+
+[http://<INSTANCE_IP>:8080/](http://<INSTANCE_IP>:8080/)
 
 ![OpenVPN Web Admin](https://cdn-images-1.medium.com/max/2430/1*WC1JKfOPNKG4vAsObzXcWg.png)
 
@@ -119,7 +97,7 @@ Before we can log in, we need to do the initial setup:
 
 Go to the following URL:
 
-[http://localhost:8080/index.php?installation](http://localhost:8080/index.php?installation)
+[http://<INSTANCE_IP>:8080/index.php?installation](http://<INSTANCE_IP>:8080/index.php?installation)
 
 ![](https://cdn-images-1.medium.com/max/2532/1*nQrPBCOEkd98HSJm5A0Aig.png)
 
@@ -149,7 +127,7 @@ Now that you have a VPN user, there are three steps required for setup of each V
 
 ### Setting up 2-Factor Authentication
 
- 1. Navigate to the OpenVPN Web Administration Page, at [http://localhost:8080](http://localhost:8080)
+ 1. Navigate to the OpenVPN Web Administration Page, at [http://<INSTANCE_IP>:8080](http://<INSTANCE_IP>:8080)
 
  2. Click **Setup Google Authentication** on the navigation bar
 
@@ -171,7 +149,7 @@ Point your camera at the QR code and you should see the profile appear with your
 
 **Download OpenVPN zip file**
 
- 1. Navigate to the OpenVPN Web Administration Page, at [http://localhost:8080](http://localhost:8080)
+ 1. Navigate to the OpenVPN Web Administration Page, at [http://<INSTANCE_IP>:8080](http://<INSTANCE_IP>:8080)
 
  2. Click **Configurations** on the navigation bar
 
@@ -239,8 +217,6 @@ And a new world opens up!
 Hope you enjoy it.
 
 ## Resources:
-[**Code Mental Youtube Channel**](https://www.youtube.com/channel/UCK1NFGy1pSjOVHW7_4qfffA)
-
 [**armindocachada/OpenVPN-Docker-GoogleAuth**](https://github.com/armindocachada/OpenVPN-Docker-GoogleAuth)
 
 [**armindocachada/OpenVPN-Admin**](https://github.com/armindocachada/OpenVPN-Admin)
