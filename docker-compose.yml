@@ -16,6 +16,7 @@ services:
         - $HOST_SSL_PORT:$HOST_SSL_PORT/tcp
     environment:
       - HOST_ADDR
+      - VPC_PRIVATE_IP
       - HOST_SSL_PORT
       - OPENVPN_ADMIN_USER
       - OPENVPN_ADMIN_PASSWORD
@@ -31,6 +32,7 @@ services:
       - EASYRSA_REQ_EMAIL
       - EASYRSA_REQ_CN
       - EASYRSA_BATCH
+      - SERVER_IP_RANGE
     volumes:
        - openvpn_config:/etc/openvpn
     restart: always
@@ -45,8 +47,6 @@ services:
       MYSQL_DATABASE: ${OPENVPN_ADMIN_DATABASE}
       MYSQL_USER: ${OPENVPN_ADMIN_USER}
       MYSQL_PASSWORD: ${OPENVPN_ADMIN_PASSWORD}
-    ports:
-      - 3306:3306
     volumes:
       - db_data:/var/lib/mysql
   googleauth:
