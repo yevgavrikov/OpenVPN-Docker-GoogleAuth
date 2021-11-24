@@ -68,6 +68,7 @@ services:
     volumes:
       - openvpn_config:/etc/openvpn
     environment:
+      - OPENVPN_ADMIN_DATABASE
       - OPENVPN_ADMIN_USER
       - OPENVPN_ADMIN_PASSWORD
       - OPENVPN_APP_NAME
