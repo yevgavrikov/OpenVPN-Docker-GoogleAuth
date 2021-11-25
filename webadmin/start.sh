@@ -26,4 +26,6 @@ for directory in "./client-conf/gnu-linux/" "./client-conf/osx-viscosity/" "./cl
   fi
 done
 
+echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
 apache2-foreground
