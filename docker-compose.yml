@@ -37,7 +37,6 @@ services:
        - openvpn_config:/etc/openvpn
     restart: always
     command: tail -f /dev/null
-
   db:
     image: mariadb
     container_name: db
@@ -47,6 +46,8 @@ services:
       MYSQL_DATABASE: ${OPENVPN_ADMIN_DATABASE}
       MYSQL_USER: ${OPENVPN_ADMIN_USER}
       MYSQL_PASSWORD: ${OPENVPN_ADMIN_PASSWORD}
+    ports:
+      - "127.0.0.1:3306:3306"
     volumes:
       - db_data:/var/lib/mysql
   googleauth:
